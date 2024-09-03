@@ -10,7 +10,7 @@ export default function Home() {
           src="/thumbnail.png"
           width={500}
           height={500}
-          alt="Picture of the author"
+          alt="Picture of a cage"
         />
       </a>
     </div>
