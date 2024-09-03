@@ -10,12 +10,21 @@
   },
   "dependencies": {
     "@ar-js-org/ar.js": "^3.4.5",
+    "@radix-ui/react-slot": "^1.1.0",
     "@react-three/drei": "^9.112.0",
     "@react-three/fiber": "^8.17.6",
+    "@react-three/xr": "^6.2.6",
     "aframe": "^1.6.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide": "^0.433.0",
+    "lucide-react": "^0.438.0",
     "next": "14.2.7",
-    "react": "^18",
+    "react": "^18.3.1",
     "react-dom": "^18",
+    "react-error-boundary": "^4.0.13",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7",
     "three": "^0.168.0"
   },
   "devDependencies": {
