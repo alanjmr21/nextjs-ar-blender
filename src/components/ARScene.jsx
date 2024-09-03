@@ -15,7 +15,7 @@ const ARScene = () => {
     <a-scene embedded arjs>
       <a-marker preset="hiro">
         <a-entity
-          gltf-model="/product.glb"
+          gltf-model="/silverbullet.glb"
           scale="2 2 2"
           position="0 0 0"
         ></a-entity>
