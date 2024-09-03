@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-const ARCanvas = ({ stopCamera }) => {
+const ARCanvas = () => {
   const videoRef = useRef(null);
   const mountRef = useRef(null);
   const streamRef = useRef(null);
@@ -16,12 +16,6 @@ const ARCanvas = ({ stopCamera }) => {
         streamRef.current = stream;
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-        }
-        if (stopCamera) {
-          stopCamera(() => {
-            stream.getTracks().forEach(track => track.stop());
-            streamRef.current = null;
-          });
         }
       } catch (err) {
         console.error("Error accessing the camera: ", err);
@@ -89,7 +83,7 @@ const ARCanvas = ({ stopCamera }) => {
       }
       window.removeEventListener('resize', handleResize);
     };
-  }, [stopCamera]);
+  }, []);
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
