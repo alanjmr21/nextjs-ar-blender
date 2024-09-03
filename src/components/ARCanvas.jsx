@@ -1,8 +1,8 @@
 // components/ARCanvas.js
-import React, { useRef, useEffect } from 'react';
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import React, { useRef, useEffect } from "react";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const ARCanvas = () => {
   const videoRef = useRef(null);
@@ -12,7 +12,13 @@ const ARCanvas = () => {
   useEffect(() => {
     const getUserMedia = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: {
+              exact: "environment",
+            },
+          },
+        });
         streamRef.current = stream;
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
@@ -26,7 +32,12 @@ const ARCanvas = () => {
 
     const scene = new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
     camera.position.z = 5;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -34,7 +45,7 @@ const ARCanvas = () => {
     mountRef.current.appendChild(renderer.domElement);
 
     // Add lights to the scene
-    const ambientLight = new THREE.AmbientLight(0xffffff,1); // Soft white light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Soft white light
     scene.add(ambientLight);
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 3); // Strong directional light
@@ -48,13 +59,18 @@ const ARCanvas = () => {
     controls.enableZoom = true;
 
     const loader = new GLTFLoader();
-    loader.load('/silverbullet.glb', (gltf) => {
-      const model = gltf.scene;
-      
-      scene.add(model);
-    }, undefined, (error) => {
-      console.error('An error happened', error);
-    });
+    loader.load(
+      "/silverbullet.glb",
+      (gltf) => {
+        const model = gltf.scene;
+
+        scene.add(model);
+      },
+      undefined,
+      (error) => {
+        console.error("An error happened", error);
+      }
+    );
 
     const animate = function () {
       requestAnimationFrame(animate);
@@ -70,7 +86,7 @@ const ARCanvas = () => {
       camera.updateProjectionMatrix();
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       if (mountRef.current) {
@@ -79,16 +95,36 @@ const ARCanvas = () => {
         }
       }
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current.getTracks().forEach((track) => track.stop());
       }
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      <video ref={videoRef} autoPlay style={{ width: '100%', height: '100vh', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }} />
-      <div ref={mountRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+      <video
+        ref={videoRef}
+        autoPlay
+        style={{
+          width: "100%",
+          height: "100vh",
+          objectFit: "cover",
+          position: "absolute",
+          top: 0,
+          left: 0,
+        }}
+      />
+      <div
+        ref={mountRef}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+        }}
+      />
     </div>
   );
 };
